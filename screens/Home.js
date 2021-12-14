@@ -70,13 +70,14 @@ const Home = () => {
             justifyContent: "center",
             paddingVertical: 10,
             paddingHorizontal: 5,
-            backgroundColor: "red",
+            backgroundColor: "purple",
+            borderRadius: 10,
           }}
           onPress={() =>
             flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
           }
         >
-          <Text>Go to top</Text>
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>Go to top</Text>
         </TouchableOpacity>
       </View>
     );
