@@ -11,6 +11,7 @@ import {
 import baseURL from "../apis";
 import { Menu } from "../components";
 import { dummyData } from "../constants";
+import { useDispatch, useSelector } from "react-redux";
 
 const Home = () => {
   const [data, setData] = React.useState([]);
@@ -21,19 +22,24 @@ const Home = () => {
 
   //   const menu = dummyData.menus;
 
+  // const dispatch = useDispatch();
+  // const products = useSelector((state) => state.shop.products);
+
+  // console.log(products);
+
   React.useEffect(() => {
-    console.log("useEffect");
+    // console.log("useEffect");
     setIsLoading(true);
     getData();
-    console.log("Page", page);
+    // console.log("Page", page);
   }, [page]);
 
   const getData = () => {
-    console.log("GetData");
+    // console.log("GetData");
     axios.get(baseURL).then((response) => {
       //   console.log(response.data);
       setData(data.concat(response.data));
-      console.log(data);
+      // console.log(data);
       setIsLoading(true);
       //   setPost(response.data);
     });
@@ -77,7 +83,9 @@ const Home = () => {
             flatListRef.current.scrollToOffset({ animated: true, offset: 0 })
           }
         >
-          <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>Go to top</Text>
+          <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
+            Go to top
+          </Text>
         </TouchableOpacity>
       </View>
     );
@@ -113,7 +121,7 @@ const Home = () => {
         ref={flatListRef}
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.uid}
         ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}

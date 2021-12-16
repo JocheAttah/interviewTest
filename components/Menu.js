@@ -34,7 +34,7 @@ const Menu = ({ title, price, page }) => {
       }}
     >
       <View>
-        <Text style={{ fontSize: 20, fontWeight: "bold", color: "black" }}>
+        <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
           {title}
         </Text>
         <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
@@ -49,7 +49,9 @@ const Menu = ({ title, price, page }) => {
             paddingHorizontal: 10,
             borderRadius: 10,
           }}
-          onPress={() => setButtonPressed(true)}
+          onPress={() => {
+            setButtonPressed(true), setCounter(counter + 1);
+          }}
         >
           <Text style={{ fontSize: 14, fontWeight: "bold", color: "white" }}>
             Add to Cart
@@ -60,6 +62,7 @@ const Menu = ({ title, price, page }) => {
           <Pressable
             onPress={() => setCounter(counter - 1)}
             style={styles.button}
+            disabled={counter <= 0 ? true : false}
           >
             <Text style={styles.counterAction}> - </Text>
           </Pressable>
@@ -108,6 +111,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     color: "#fff",
     fontWeight: "bold",
-
   },
 });
