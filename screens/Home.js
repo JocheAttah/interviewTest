@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import React from "react";
 import {
   View,
@@ -12,6 +12,7 @@ import baseURL from "../apis";
 import { Menu } from "../components";
 import { dummyData } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../redux/actions/shop-actions";
 
 const Home = () => {
   const [data, setData] = React.useState([]);
@@ -22,28 +23,29 @@ const Home = () => {
 
   //   const menu = dummyData.menus;
 
-  // const dispatch = useDispatch();
-  // const products = useSelector((state) => state.shop.products);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.shop.products);
 
-  // console.log(products);
+  console.log(products);
 
   React.useEffect(() => {
-    // console.log("useEffect");
+    console.log("useEffect");
     setIsLoading(true);
-    getData();
-    // console.log("Page", page);
+    // getData();
+    dispatch(fetchProducts());
+    console.log("Page", page);
   }, [page]);
 
-  const getData = () => {
-    // console.log("GetData");
-    axios.get(baseURL).then((response) => {
-      //   console.log(response.data);
-      setData(data.concat(response.data));
-      // console.log(data);
-      setIsLoading(true);
-      //   setPost(response.data);
-    });
-  };
+  // const getData = () => {
+  //   // console.log("GetData");
+  //   axios.get(baseURL).then((response) => {
+  //     //   console.log(response.data);
+  //     setData(data.concat(response.data));
+  //     // console.log(data);
+  //     setIsLoading(true);
+  //     //   setPost(response.data);
+  //   });
+  // };
 
   const renderItem = ({ item }) => (
     <Menu title={item.dish} price={200} page={page} />
@@ -119,14 +121,14 @@ const Home = () => {
     >
       <FlatList
         ref={flatListRef}
-        data={data}
+        data={products}
         renderItem={renderItem}
         keyExtractor={(item) => item.uid}
         ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}
         onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.5}
+        onEndReachedThreshold={0.2}
       />
       <View
         style={{

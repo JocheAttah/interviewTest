@@ -1,11 +1,21 @@
 import * as actionTypes from "../types/shop-types";
+import foodAPI from "../../apis";
 
-export const setProducts = (products) => {
-  return {
-    type: actionTypes.SET_PRODUCTS,
-    payload: products,
-  };
+export const fetchProducts = () => async (dispatch) => {
+  const response = await foodAPI.get("/random_food?size=1");
+//   console.log(response.data);
+  dispatch({
+    type: actionTypes.FETCH_PRODUCTS,
+    payload: response.data,
+  });
 };
+
+// export const setProducts = (products) => {
+//   return {
+//     type: actionTypes.SET_PRODUCTS,
+//     payload: products,
+//   };
+// };
 
 export const addToCart = (itemID) => {
   return {

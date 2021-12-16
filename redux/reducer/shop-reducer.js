@@ -7,8 +7,8 @@ const initialState = {
 
 const shopReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.SET_PRODUCTS:
-      return { ...state, products: action.payload };
+    case actionTypes.FETCH_PRODUCTS:
+      return { ...state, products: [...state.products, ...action.payload] };
     case actionTypes.ADD_TO_CART:
       return {};
     case actionTypes.INCREASE_QTY:
