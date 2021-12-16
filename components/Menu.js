@@ -6,10 +6,14 @@ import {
   StyleSheet,
   Pressable,
 } from "react-native";
+import { useDispatch } from "react-redux";
+import { addToCart, decreaseQty, increaseQty } from "../redux/actions/shop-actions";
 
-const Menu = ({ title, price, page }) => {
+const Menu = ({ title, price, id }) => {
   const [counter, setCounter] = React.useState(0);
   const [buttonPressed, setButtonPressed] = React.useState(false);
+
+  const dispatch = useDispatch();
   return (
     <View
       style={{
@@ -18,7 +22,6 @@ const Menu = ({ title, price, page }) => {
         justifyContent: "space-between",
         alignItems: "center",
         marginBottom: 10,
-        // backgroundColor: page % 2 === 0 ? "red" : "blue",
         backgroundColor: "white",
         paddingHorizontal: 10,
         paddingVertical: 15,
@@ -50,7 +53,9 @@ const Menu = ({ title, price, page }) => {
             borderRadius: 10,
           }}
           onPress={() => {
-            setButtonPressed(true), setCounter(counter + 1);
+            setButtonPressed(true),
+              setCounter(counter + 1),
+              dispatch(addToCart(id));
           }}
         >
           <Text style={{ fontSize: 14, fontWeight: "bold", color: "white" }}>
@@ -60,7 +65,9 @@ const Menu = ({ title, price, page }) => {
       ) : (
         <View style={styles.counterSection}>
           <Pressable
-            onPress={() => setCounter(counter - 1)}
+            onPress={() => {
+              setCounter(counter - 1), dispatch(decreaseQty(id));
+            }}
             style={styles.button}
             disabled={counter <= 0 ? true : false}
           >
@@ -68,7 +75,9 @@ const Menu = ({ title, price, page }) => {
           </Pressable>
           <Text style={styles.counter}>{counter}</Text>
           <Pressable
-            onPress={() => setCounter(counter + 1)}
+            onPress={() => {
+              setCounter(counter + 1), dispatch(increaseQty(id));
+            }}
             style={styles.button}
           >
             <Text style={styles.counterAction}> + </Text>

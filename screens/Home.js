@@ -1,4 +1,3 @@
-// import axios from "axios";
 import React from "react";
 import {
   View,
@@ -8,47 +7,46 @@ import {
   TouchableOpacity,
   Button,
 } from "react-native";
-import baseURL from "../apis";
 import { Menu } from "../components";
-import { dummyData } from "../constants";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../redux/actions/shop-actions";
 
-const Home = () => {
-  const [data, setData] = React.useState([]);
+const Home = ({navigation}) => {
+  // const [data, setData] = React.useState([]);
   const [page, setPage] = React.useState(1);
+  const [cartCounter, setCartCounter] = React.useState(0);
+  const [totalPrice, setTotalPrice] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const flatListRef = React.useRef();
 
-  //   const menu = dummyData.menus;
 
   const dispatch = useDispatch();
   const products = useSelector((state) => state.shop.products);
+  const cart = useSelector((state) => state.shop.cart);
 
   console.log(products);
 
   React.useEffect(() => {
     console.log("useEffect");
     setIsLoading(true);
-    // getData();
     dispatch(fetchProducts());
     console.log("Page", page);
   }, [page]);
 
-  // const getData = () => {
-  //   // console.log("GetData");
-  //   axios.get(baseURL).then((response) => {
-  //     //   console.log(response.data);
-  //     setData(data.concat(response.data));
-  //     // console.log(data);
-  //     setIsLoading(true);
-  //     //   setPost(response.data);
-  //   });
-  // };
+  React.useEffect(() => {
+    let count = 0;
+    let price = 0;
+    cart.forEach((item) => {
+      count += item.qty;
+      price += item.qty * item.price;
+    });
+    setCartCounter(count);
+    setTotalPrice(price);
+  }, [cart, cartCounter]);
 
   const renderItem = ({ item }) => (
-    <Menu title={item.dish} price={200} page={page} />
+    <Menu title={item.dish} price={200} id={item.uid} />
   );
 
   const renderHeader = () => (
@@ -66,11 +64,25 @@ const Home = () => {
 
   const renderFooter = () => {
     return isLoading ? (
-      <View style={{ marginTop: 10, alignItems: "center" }}>
+      <View
+        style={{
+          // flex: 1,
+          marginTop: 10,
+          alignItems: "center",
+          // backgroundColor: "white",
+        }}
+      >
         <ActivityIndicator size="large" />
       </View>
     ) : (
-      <View style={{ marginBottom: 50, alignItems: "center" }}>
+      <View
+        style={{
+          // flex: 1,
+          marginBottom: 50,
+          alignItems: "center",
+          // backgroundColor: "white",
+        }}
+      >
         <TouchableOpacity
           style={{
             width: "60%",
@@ -96,7 +108,7 @@ const Home = () => {
   const renderEmpty = () => (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <Text>No Data at the moment</Text>
-      <Button onPress={() => getData()} title="Refresh" />
+      <Button onPress={() => dispatch(fetchProducts())} title="Refresh" />
     </View>
   );
 
@@ -128,7 +140,7 @@ const Home = () => {
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}
         onEndReached={handleLoadMore}
-        onEndReachedThreshold={0.2}
+        onEndReachedThreshold={0.5}
       />
       <View
         style={{
@@ -156,7 +168,7 @@ const Home = () => {
             Quatity
           </Text>
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
-            (20)
+            {cartCounter}
           </Text>
         </View>
 
@@ -171,7 +183,7 @@ const Home = () => {
             Total
           </Text>
           <Text style={{ fontSize: 18, fontWeight: "bold", color: "white" }}>
-            ${0}
+            ${totalPrice}
           </Text>
         </View>
         <TouchableOpacity
@@ -193,6 +205,7 @@ const Home = () => {
 
             elevation: 5,
           }}
+          onPress={() => navigation.navigate('cart')}
         >
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>Continue</Text>
         </TouchableOpacity>
