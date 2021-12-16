@@ -28,17 +28,14 @@ const CartItem = ({ title, price, qty }) => {
         <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
           {title}
         </Text>
-        <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
-          {qty}
+        <Text style={{ fontSize: 14, color: "black" }}>
+         Quantity: {qty}
         </Text>
       </View>
       <View>
         <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
-          {price}
+          ${price}
         </Text>
-        {/* <Text style={{ fontSize: 18, fontWeight: "bold", color: "black" }}>
-            
-          </Text> */}
       </View>
     </View>
   );

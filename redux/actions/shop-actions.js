@@ -2,7 +2,7 @@ import * as actionTypes from "../types/shop-types";
 import foodAPI from "../../apis";
 
 export const fetchProducts = () => async (dispatch) => {
-  const response = await foodAPI.get("/random_food?size=1");
+  const response = await foodAPI.get("/random_food?size=10");
   dispatch({
     type: actionTypes.FETCH_PRODUCTS,
     payload: response.data,

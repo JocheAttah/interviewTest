@@ -11,15 +11,13 @@ import { Menu } from "../components";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../redux/actions/shop-actions";
 
-const Home = ({navigation}) => {
-  // const [data, setData] = React.useState([]);
+const Home = ({ navigation }) => {
   const [page, setPage] = React.useState(1);
   const [cartCounter, setCartCounter] = React.useState(0);
   const [totalPrice, setTotalPrice] = React.useState(0);
   const [isLoading, setIsLoading] = React.useState(false);
 
   const flatListRef = React.useRef();
-
 
   const dispatch = useDispatch();
   const products = useSelector((state) => state.shop.products);
@@ -66,10 +64,8 @@ const Home = ({navigation}) => {
     return isLoading ? (
       <View
         style={{
-          // flex: 1,
           marginTop: 10,
           alignItems: "center",
-          // backgroundColor: "white",
         }}
       >
         <ActivityIndicator size="large" />
@@ -77,10 +73,8 @@ const Home = ({navigation}) => {
     ) : (
       <View
         style={{
-          // flex: 1,
           marginBottom: 50,
           alignItems: "center",
-          // backgroundColor: "white",
         }}
       >
         <TouchableOpacity
@@ -116,7 +110,6 @@ const Home = ({navigation}) => {
     if (page + 1 <= 5) {
       console.log("handleLoadMore");
       setPage(page + 1);
-      // console.log("Page", page);
       setIsLoading(true);
     } else {
       setIsLoading(false);
@@ -205,7 +198,7 @@ const Home = ({navigation}) => {
 
             elevation: 5,
           }}
-          onPress={() => navigation.navigate('cart')}
+          onPress={() => navigation.navigate("cart")}
         >
           <Text style={{ fontSize: 18, fontWeight: "bold" }}>Continue</Text>
         </TouchableOpacity>

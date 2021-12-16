@@ -7,7 +7,11 @@ import {
   Pressable,
 } from "react-native";
 import { useDispatch } from "react-redux";
-import { addToCart, decreaseQty, increaseQty } from "../redux/actions/shop-actions";
+import {
+  addToCart,
+  decreaseQty,
+  increaseQty,
+} from "../redux/actions/shop-actions";
 
 const Menu = ({ title, price, id }) => {
   const [counter, setCounter] = React.useState(0);
@@ -99,22 +103,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 8,
     borderRadius: 10,
-    // paddingHorizontal: 10,
   },
   counter: {
     fontSize: 20,
     fontWeight: "bold",
     paddingHorizontal: 20,
     color: "white",
-  },
-  button: {
-    // borderWidth: 2,
-    // borderRadius: 10,
-    // borderColor: "lightgrey",
-    // width: 21,
-    // height: 21,
-    // justifyContent: "center",
-    // alignItems: "center",
   },
   counterAction: {
     fontSize: 20,

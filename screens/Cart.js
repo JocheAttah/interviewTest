@@ -1,5 +1,5 @@
 import React from "react";
-import { FlatList, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { useSelector } from "react-redux";
 import { CartItem } from "../components";
 
@@ -27,9 +27,9 @@ const Cart = () => {
         fontSize: 25,
         fontWeight: "700",
         marginVertical: 15,
-        // marginHorizontal: 10,
         paddingTop: 40,
-        paddingHorizontal:10,
+        paddingBottom: 20,
+        paddingHorizontal: 10,
         shadowColor: "purple",
         shadowOffset: {
           width: 0,
@@ -37,7 +37,6 @@ const Cart = () => {
         },
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
-
         elevation: 5,
       }}
     >
@@ -50,12 +49,19 @@ const Cart = () => {
   return (
     <View style={{ flex: 1, backgroundColor: "white" }}>
       {renderHeader()}
-      <FlatList
-        data={cart}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.uid}
-      />
-
+      {cart === [] ? (
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+        >
+          <Text>No item is in the Cart</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={cart}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.uid}
+        />
+      )}
       <View
         style={{
           flexDirection: "row",
@@ -107,5 +113,3 @@ const Cart = () => {
 };
 
 export default Cart;
-
-const styles = StyleSheet.create({});
